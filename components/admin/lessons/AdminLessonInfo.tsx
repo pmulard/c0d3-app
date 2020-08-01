@@ -71,10 +71,10 @@ const LessonBase: React.FC<LessonBaseProps> = ({ setLessons, lesson }) => {
     }
   }
 
-  const handleChange = (value: string, i: number) => {
+  const handleChange = (value: string, propertyIndex: number) => {
     const newLessonInfo = [...lessonInfo]
-    newLessonInfo[i].value = value
-    checkForErrors(newLessonInfo[i])
+    newLessonInfo[propertyIndex].value = value
+    checkForErrors(newLessonInfo[propertyIndex])
     setLessonInfo(newLessonInfo)
   }
 
@@ -153,10 +153,10 @@ const NewLesson: React.FC<NewLessonProps> = ({ setLessons }) => {
     }
   }
 
-  const handleChange = (value: string, i: number) => {
+  const handleChange = (value: string, propertyIndex: number) => {
     const newLessonInfo = [...lessonInfo]
-    newLessonInfo[i].value = value
-    checkForErrors(newLessonInfo[i])
+    newLessonInfo[propertyIndex].value = value
+    checkForErrors(newLessonInfo[propertyIndex])
     setLessonInfo(newLessonInfo)
   }
   return (
