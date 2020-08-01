@@ -11,6 +11,8 @@ import {
   checkForAllErrors
 } from '../../../helpers/admin/lessonHelpers'
 import { Lesson } from '../../../graphql/index'
+import { Button } from '../../theme/Button'
+import { NewChallenge, AdminLessonChallenges } from './AdminLessonChallenges'
 
 type LessonInfoProps = {
   lessons: Lesson[] | undefined
@@ -181,16 +183,53 @@ export const AdminLessonInfo: React.FC<LessonInfoProps> = ({
   lessons,
   selectedLesson
 }) => {
-  console.log(selectedLesson)
+  const [newChallengeView, setNewChallengeView] = useState(false)
+
   // true when user clicks on `create new lesson` button
-  if (lessons && selectedLesson === lessons.length - 1) {
+  if (lessons && selectedLesson === lessons.length) {
     return <NewLesson setLessons={setLessons} />
   }
+
   // set currently selected lesson
   const lesson = lessons && lessons[selectedLesson]
   return (
-    <div style={{ textAlign: 'center' }} className="col-8" key={_.uniqueId()}>
-      <LessonBase setLessons={setLessons} lesson={lesson} />
+    <div key={_.uniqueId()} style={{ textAlign: 'center' }} className="col-8">
+      <div style={{ position: 'absolute', right: 0, top: 0 }}>
+        <Button
+          onClick={() => setNewChallengeView(!newChallengeView)}
+          type="success"
+        >
+          {newChallengeView ? 'Back to Lesson Info' : 'Create New Challenge'}
+        </Button>
+      </div>
+      {newChallengeView ? (
+        <NewChallenge
+          setLessons={setLessons}
+          // challenge={challengeAttributes}
+          lessonId={parseInt(lesson ? lesson.id + '' : '')}
+        />
+      ) : (
+        <>
+          <LessonBase setLessons={setLessons} lesson={lesson} />
+          <hr />
+          <span
+            className="text-primary"
+            style={{
+              fontSize: '4rem',
+              textAlign: 'center',
+              fontWeight: 'bold'
+            }}
+          >
+            Lesson Challenges
+          </span>
+
+          <AdminLessonChallenges
+            challenges={lesson && lesson.challenges}
+            lessonId={parseInt(lesson ? lesson.id + '' : '')}
+            setLessons={setLessons}
+          />
+        </>
+      )}
     </div>
   )
 }
