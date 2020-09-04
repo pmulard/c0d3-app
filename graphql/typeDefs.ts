@@ -9,6 +9,7 @@ export default gql`
     isTokenValid(cliToken: String!): Boolean!
     submissions(lessonId: String!): [Submission]
     alerts: [Alert!]!
+    getLessonMentors(lessonId: String!): [User]
   }
 
   type TokenResponse {
